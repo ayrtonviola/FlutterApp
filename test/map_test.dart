@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
+// Mapa estruturado com chaves (nomes) e valores (listas de notas em double)
 Map<String, List<double>> alunos = {
   'Maria': [8.0, 9.0],
   'Bruna': [7.0, 7.0],
@@ -7,12 +8,14 @@ Map<String, List<double>> alunos = {
 };
 
 void main() {
+  // Adiciona um elemento apenas se a chave ainda não existir no mapa
   test('Adicionar elemento', () {
     alunos.putIfAbsent('Elena', () => [9.0, 8.0]);
     expect(alunos.containsKey('Elena'), isTrue);
     expect(alunos['Elena'], [9.0, 8.0]);
   });
 
+  // Insere um conjunto de novos pares de chave/valor usando o método addAll
   test('Adicionar outro dicionário', () {
     alunos.addAll({
       'Elena': [9.0, 8.0],
@@ -22,11 +25,13 @@ void main() {
     expect(alunos.containsKey('Luiza'), isTrue);
   });
 
+  // Remove o item correspondente à chave fornecida
   test('Remover elemento', () {
     alunos.remove('Bruna');
     expect(alunos.containsKey('Bruna'), isFalse);
   });
 
+  // Atualiza o valor associado a uma chave já existente
   test('Atualizar elemento', () {
     alunos.update('Carla', (value) => [9.0, 8.0]);
     expect(alunos['Carla'], [9.0, 8.0]);
@@ -34,6 +39,7 @@ void main() {
     expect(alunos['Carla'], [8.0, 9.0]);
   });
 
+  // Percorre as chaves, valores e realiza o somatório geral com forEach
   test('Testar percorrer dicionário', () {
     expect(alunos.keys, ['Maria', 'Carla', 'Elena', 'Luiza']);
     expect(alunos.values, [
@@ -52,10 +58,11 @@ void main() {
     expect(soma, 68.0);
   });
 
-  // Passo 7: Exercício para calcular a média das notas
+  // Exercício: Itera sobre cada aluno calculando a média aritmética de suas notas
   test('Calcular médias', () {
     Map<String, double> medias = {};
     
+    // Usa forEach para calcular a média de cada lista de notas e armazena no novo mapa
     alunos.forEach((nome, notas) {
       double somaNotas = notas.reduce((a, b) => a + b);
       medias[nome] = somaNotas / notas.length;
